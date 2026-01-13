@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <title>Things That Are Older Than You Think</title>
+    <meta name="description" content="Some things have been around longer than you assumed." />
+    <meta name="author" content="Tau J. Marake">
+
+</head>
+
+<body>
+
+    <div class="controls">
+        <button id="themeToggle">Light</button>
+        <button id="shareBtn">Share</button>
+    </div>
+
+    <main>
+        <h1>Things that are older than you think</h1>
+
+        <div class="thing" id="thing"></div>
+        <div class="age" id="age"></div>
+        <div class="note" id="note"></div>
+
+
+        <button id="nextBtn">Show another</button>
+    </main>
+
+    <footer id="footer"></footer>
+
+    <script>
+        /** Theme toggle */
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.onclick = () => {
+            document.body.classList.toggle("light");
+            themeToggle.textContent =
+                document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+
+        /** Time spent */
+        let seconds = 0;
+
+        setInterval(() => {
+            seconds++;
+            footer.textContent = `You’ve spent ${seconds} second${seconds === 1 ? "" : "s"} learning nothing urgent.`;
+        }, 1000);
+
+        /** Data */
+        const items = [
+            {
+                thing: "The Eiffel Tower",
+                age: "Built in 1889",
+                note: "It was meant to be temporary."
+            },
+            {
+                thing: "Email",
+                age: "First sent in 1971",
+                note: "Older than most people complaining about it."
+            },
+            {
+
+                thing: "Coca-Cola",
+                age: "Created in 1886",
+                note: "Still the same logo. Still addictive."
+            },
+            {
+                thing: "The USB Port",
+                age: "Introduced in 1996",
+                note: "Still somehow upside down every time."
+            },
+            {
+                thing: "The Internet",
+                age: "Began in the 1960s",
+                note: "It was never supposed to feel like this."
+            },
+            {
+                thing: "The Baobab Trees",
+                age: "Some baobasbs in South Africa are over 2, 000 years old.",
+                note: "They don't grow fast.\nThey endure."
+            },
+            {
+                thing: "Gold Mining in South Africa",
+                age: "Dates back over 1, 000 years, long before Europian arrival.",
+                note: "Johannesburg was not the beginning, just the loudest chapter."
+            },
+            {
+                thing: "The University of Cape Town (UCT)",
+                age: "Founded in 1829",
+                note: "that's \nolder than electricity in homes.\nOlder than the telephone.\nOlder than the Union of South Africa itself (1910)"
+            },
+            {
+                thing: "The Cradle of Humankind",
+                age: "Some fossils found are over 3 million years old",
+                note: "South Africa isn't just part of history. It holds the beginning of it.\nModern humans didn't arrive here, THEY EMERGED HERE."
+            },
+            {
+                thing: "More to Come...",
+                age: "Come back later, okay.",
+                note: "What if your soul is older than you think... like it was here before you. How? A ke tsebe lenna!"
+            }
+        ];
+
+        let index = -1;
+        const thingEl =
+
+            document.getElementById("thing");
+        const ageEl = document.getElementById("age");
+        const noteEl = document.getElementById("note");
+
+        function showNext() {
+            index = (index + 1) % items.length;
+            const item = items[index];
+
+            thingEl.textContent = item.thing;
+            ageEl.textContent = item.age;
+
+            noteEl.classList.remove("show");
+            setTimeout(() => {
+                noteEl.textContent = item.note;
+                noteEl.classList.add("show");
+            }, 400);
+        }
+
+
+
+        document.getElementById("nextBtn").onclick = showNext;
+        showNext();
+
+        /** Share option */
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
+                title: "Things That Are Older Than You Think",
+                text: "Some things have been around longer than we assume.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(data);
+                } else {
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch { }
+        };
+    </script>
+
+</body>
+
+</html>
