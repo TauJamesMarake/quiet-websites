@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Is It Raining Somewhere?</title>
+    <meta name="description" content="Yes. Somewhere on Earth, it is raining." />
+    <meta name="author" content="Tau J. Marake">
+</head>
+
+<body>
+
+    <div class="controls">
+        <button id="themeToggle">Light</button>
+
+    </div>
+
+    <main>
+        <h1>Is It Raining Somewhere?</h1>
+        <div class="answer">Yes.</div>
+        <div class="message" id="message"></div>
+    </main>
+
+    <footer>
+        Weather is always happening.<br>
+        Built by Tau J. Marake •
+    </footer>
+
+    <script>
+        /** Theme toggle */
+        const toggle = document.getElementById("themeToggle");
+        toggle.onclick = () => {
+            document.body.classList.toggle("light");
+            toggle.textContent =
+
+
+                document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+
+        /** Messages */
+        const messages = [
+            "Somewhere, clouds are doing their work.",
+            "Rain doesn’t need witnesses.",
+            "A street is wet. A window listens.",
+            "Not all weather reaches you.",
+            "Someone forgot an umbrella.",
+            "The ground is being reminded.",
+            "It will pass. It always does."
+        ];
+
+        const messageEl = document.getElementById("message");
+
+        function showMessage() {
+            const text =
+
+                messages[Math.floor(Math.random() * messages.length)];
+            messageEl.classList.remove("show");
+
+            setTimeout(() => {
+                messageEl.textContent = text;
+                messageEl.classList.add("show");
+            }, 400);
+        }
+
+        showMessage();
+        setInterval(showMessage, 8000);
+    </script>
+
+</body>
+
+</html>
