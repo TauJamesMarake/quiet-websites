@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <title>This Website Exists Because It Can</title>
+    <meta name="description" content="No ads. No tracking. No purpose. Just curiosity." />
+    <meta name="author" content="Tau J. Marake">
+
+</head>
+
+<body>
+
+    <div class="controls">
+
+        <button id="themeToggle">Light</button>
+    </div>
+
+    <main>
+        <h1>This website exists</h1>
+        <p>Because it can.</p>
+
+        <button id="mainBtn">Still here?</button>
+
+        <div id="response" class="response"></div>
+    </main>
+
+    <footer id="footerText"></footer>
+
+    <script>
+        /** Theme toggle */
+        const themeToggle = document.getElementById("themeToggle");
+
+        themeToggle.onclick = () => {
+            document.body.classList.toggle("light");
+            themeToggle.textContent =
+                document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+
+        /** the Time spent */
+        let seconds = 0;
+        setInterval(() => seconds++, 1000);
+
+        /** Button logic */
+        const buttonTexts = [
+            "Still here?",
+            "You’re really committed.",
+            "This still does nothing.",
+            "You could leave.",
+            "There is no reward.",
+            "This is your life now.",
+            "Okay. Respect.",
+            "Okay. I'm out of jokes, just quit."
+
+        ];
+
+        const responses = [
+            "Curiosity is undefeated.",
+            "You stayed longer than expected.",
+            "Nothing changed. Except time.",
+            "This achieved exactly what it promised.",
+            "You pressed a button. History noticed nothing.",
+            "Somewhere, a server smiled."
+        ];
+
+        let clicks = 0;
+        const btn = document.getElementById("mainBtn");
+        const responseEl = document.getElementById("response");
+
+        btn.onclick = () => {
+            clicks++;
+
+
+            // Button text evolves
+            if (clicks < buttonTexts.length) {
+                btn.textContent = buttonTexts[clicks];
+            }
+
+            // Response
+            responseEl.textContent =
+                responses[Math.floor(Math.random() * responses.length)];
+            responseEl.classList.add("show");
+
+            // Mobile vibration (subtle)
+            if (navigator.vibrate) {
+                navigator.vibrate(15);
+            }
+        };
+
+        /* Footer existential timer */
+        const footer = document.getElementById("footerText");
+
+        setInterval(() => {
+            footer.textContent = `You’ve spent ${seconds} second${seconds === 1 ? "" : "s"} here.`;
+        }, 1000);
+    </script>
+
+</body>
+
+</html>
