@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+
+    <title>Did You Blink?</title>
+    <meta name="description" content="A soft reminder of that moments pass, quetly.">
+    <meta name="author" content="Tau J. Marake">
+
+</head>
+
+<body>
+    <div class="controls">
+        <button id="themeToggle">Light</button>
+        <button id="soundToggle">Breath</button>
+        <button id="shareBtn">Share</button>
+    </div>
+
+    <main>
+        <h1>Did You Blink?</h1>
+        <div>
+            <span id="seconds">0</span> seconds passed.
+        </div>
+        <br>
+        <div class="message" id="message"></div>
+    </main>
+
+    <footer>
+        <span id="visits"></span>
+    </footer>
+
+    <!-- Breath sound -->
+    <audio id="breathAudio" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_33b06f69c4.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // TImer + messages
+        let seconds = 0;
+        const secondsEl = document.getElementById("seconds");
+        const messageEl = document.getElementById("message");
+
+        const messages = [
+            "That moment slipped by.",
+            "You are slightly older now.",
+            "Blinking is a kind of time travel.",
+            "Nothing stayed the same",
+            "Another second quetly left.",
+            "This moment already belongs to memory",
+            "Time did not pause for this."
+        ];
+
+        function randomMessage() {
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        setInterval(() => {
+            seconds++;
+            secondsEl.textContent = seconds;
+
+            if (seconds % 5 == 0) {
+                messageEl.textContent = randomMessage();
+                messageEl.classList.add("show");
+
+                setTimeout(() => {
+                    messageEl.classList.remove("show");
+                }, 3000);
+            }
+        }, 1000);
+
+        // Theme toggle
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.onclick = () => {
+            document.body.classList.toggle("light");
+            themeToggle.textContent = document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+
+        // Breath sound toggle
+        const breathAudio = document.getElementById("breathAudio");
+        breathAudio.volume = 0.50;
+
+        const soundToggle = document.getElementById("soundToggle");
+        let soundOn = false;
+
+        soundToggle.onclick = () => {
+            soundOn = !soundOn;
+            soundToggle.textContent = soundOn ? "Mute" : "Breath";
+            soundOn ? breathAudio.play() : breathAudio.pause();
+        };
+
+        // Share button
+        const shareBtn = document.getElementById("shareBtn");
+        shareBtn.onclick = async () => {
+            const shareBtn = {
+                title: "Did You Blink?",
+                text: "A quiet reminder that moments pass.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch (err) { }
+        };
+
+        // Analytics-free visit counter
+        let visits = localStorage.getItem("blink_visits") || 0;
+        visits++;
+        localStorage.setItem("blinl_visits", visits);
+
+        document.getElementById("visits").textContent = `${visits} quiet visit${visits > 1 ? "s" : ""} from this device`;
+
+    </script>
+</body>
+
+</html>
