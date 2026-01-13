@@ -1,0 +1,149 @@
+:root {
+    --bg: #0f1014;
+    --fg: #f1f1f5;
+    --muted: #9a9aa5;
+    --accent: #7f8cff;
+    --grain: 0.06;
+}
+
+body.light {
+    --bg: #f6f6f8;
+    --fg: #1b1c22;
+    --muted: #6e6e78;
+    --accent: #5a6cff;
+    --grain: 0.04;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    transition: background 0.6s ease, color 0.6s ease;
+}
+
+/** Grain */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' %3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4' /%3E%3C/svg%3E");
+    opacity: var(--grain);
+    pointer-events: none;
+}
+
+main {
+    max-width: 700px;
+    width: 90%;
+    text-align: center;
+    animation: fadeIn 1.6s ease forwards;
+}
+
+h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+
+}
+
+p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    background: transparent;
+    border: 1px solid var(--muted);
+    color: var(--fg);
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+
+textarea:focus {
+    border-color: var(--accent);
+}
+
+.counter {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+}
+
+button {
+    margin-top: 1.5rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--muted);
+    background: none;
+    color: var(--fg);
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.response {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-top: 2rem;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.response.show {
+    opacity: 1;
+}
+
+.controls {
+
+    position: fixed;
+    top: 1.2rem;
+    right: 1.2rem;
+}
+
+footer {
+    position: fixed;
+    margin-top: 1.2rem;
+    bottom: 1.2rem;
+    width: 100%;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding: 0 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
