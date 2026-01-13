@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Leave Something Here</title>
+    <meta name="description" content="Leave a small thought. Take one in return." />
+    <meta name="author" content="Tau J. Marake">
+</head>
+
+<body>
+
+    <div class="controls">
+        <button id="themeToggle">Light</button>
+        <button id="soundToggle">Wind</button>
+    </div>
+
+    <main id="stage">
+        <h1>Leave Something Here</h1>
+        <p>It doesn’t have to be important.</p>
+        <br>
+
+        <textarea id="input" maxlength="140" placeholder="a thought, a feeling, a small truth"></textarea>
+        <div class="counter"><span id="count">0</span>/140</div>
+
+        <button id="leaveBtn">Leave it</button>
+
+        <div class="response" id="response"></div>
+    </main>
+
+    <footer>
+        Nothing is stored anywhere else.<br>
+        Built by Tau J. Marake
+    </footer>
+
+    <audio id="wind" loop preload="auto">
+        <source src="wind.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const input = document.getElementById("input");
+        const count = document.getElementById("count");
+        const button = document.getElementById("leaveBtn");
+        const response = document.getElementById("response");
+        const stage = document.getElementById("stage");
+
+        const seedMessages = [
+            "It will make sense later.",
+            "You are not behind.",
+            "Someone else feels this too.",
+            "This moment is enough.",
+            "You can rest.",
+            "Not everything needs fixing.",
+            "Still here. Still trying."
+        ];
+
+        const STORAGE_KEY = "quiet-messages";
+
+        input.addEventListener("input", () => {
+            count.textContent = input.value.length;
+        });
+
+        button.onclick = () => {
+            const text = input.value.trim();
+            if (!text) return;
+
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            stored.push(text);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+
+            input.style.display = "none";
+            button.style.display = "none";
+            count.parentElement.style.display = "none";
+
+            const pool = [...seedMessages, ...stored];
+            const reply = pool[Math.floor(Math.random() * pool.length)];
+
+            setTimeout(() => {
+                response.textContent = `Someone once left this:\n“${reply}”`;
+                response.classList.add("show");
+            }, 600);
+        };
+
+        //.. WInd sound
+        const wind = document.getElementById("wind");
+        const soundToggle = document.getElementById("soundToggle");
+
+        let windOn = false;
+
+        wind.volume = 0;
+        const fadeIn = setInterval(() => {
+            if (wind.volume < 0.15) {
+                wind.volume += 0.01;
+            } else {
+                clearInterval(fadeIn);
+            }
+        }, 120);
+
+        soundToggle.onclick = () => {
+            windOn = !windOn;
+
+            if (windOn) {
+                wind.play();
+                soundToggle.textContent = "Silence";
+            } else {
+                wind.pause();
+                soundToggle.textContent = "Wind";
+            }
+        };
+
+        button.addEventListener("click", () => {
+            if (windOn) {
+                wind.play();
+            }
+        });
+
+
+        //.. Theme toggle
+        const toggle = document.getElementById("themeToggle");
+        toggle.onclick = () => {
+            document.body.classList.toggle("light");
+            toggle.textContent =
+                document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+    </script>
+
+</body>
+
+</html>
