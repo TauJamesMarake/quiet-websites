@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>You Are Not Late</title>
+    <meta name="description" content="A reminder that there is no schedule here." />
+    <meta name="author" content="Tau J. Marake">
+</head>
+
+<body>
+
+    <div class="controls">
+        <button id="themeToggle">Light</button>
+    </div>
+
+
+    <main>
+        <h1>You Are Not Late.</h1>
+        <div class="time" id="time"></div>
+        <div class="message" id="message"></div>
+    </main>
+
+    <footer>
+        There is no deadline here.
+    </footer>
+
+    <script>
+        /** Theme toggle */
+        const toggle = document.getElementById("themeToggle");
+        toggle.onclick = () => {
+            document.body.classList.toggle("light");
+            toggle.textContent =
+                document.body.classList.contains("light")
+
+                    ? "Dark" : "Light";
+        };
+
+        /** Time display */
+        const timeEl = document.getElementById("time");
+        function updateTime() {
+            const now = new Date();
+            timeEl.textContent = now.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        /** Messages */
+        const messages = [
+            "Nothing important was missed.",
+            "You arrived when you did.",
+
+            "There is no schedule here.",
+            "This moment is enough.",
+            "You are exactly on time for this.",
+            "No one is waiting.",
+            "Nothing is behind.",
+            "Did you breathe, just a little?",
+            "I pray you heal from things you don't talk about.",
+
+            "Don't forget to pray.",
+            "Like Einstein said, time is relative. You are never late nor early, YOU ARE ON TIME. ",
+            "You are on time.",
+
+        ];
+
+        const messageEl = document.getElementById("message");
+
+        function showMessage() {
+            const text = messages[Math.floor(Math.random() * messages.length)];
+            messageEl.classList.remove("show");
+
+            setTimeout(() => {
+                messageEl.textContent = text;
+                messageEl.classList.add("show");
+            }, 400);
+        }
+
+
+        showMessage();
+        setInterval(showMessage, 7000);
+    </script>
+
+</body>
+
+</html>
