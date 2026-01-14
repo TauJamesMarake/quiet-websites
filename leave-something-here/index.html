@@ -16,7 +16,8 @@
 
     <div class="controls">
         <button id="themeToggle">Light</button>
-        <button id="soundToggle">Wind</button>
+        <button id="soundToggle">Heartbeat</button>
+        <button id="shareBtn">Share</button>
     </div>
 
     <main id="stage">
@@ -37,8 +38,8 @@
         Built by Tau J. Marake
     </footer>
 
-    <audio id="wind" loop preload="auto">
-        <source src="wind.mp3" type="audio/mpeg">
+    <audio id="heartbeat" loop preload="auto">
+        <source src="../components/heart-beat.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -85,8 +86,30 @@
             }, 600);
         };
 
+        // Share button
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
+                title: "Leave Something Here.",
+                text: "Leave a small thought. Take one in return.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(data);
+                } else {
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch { }
+        };
+
+
+
         //.. WInd sound
-        const wind = document.getElementById("wind");
+        const wind = document.getElementById("heartbeat");
         const soundToggle = document.getElementById("soundToggle");
 
         let windOn = false;
