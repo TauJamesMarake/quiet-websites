@@ -16,6 +16,7 @@
 
     <div class="controls">
         <button id="themeToggle">Light</button>
+        <button id="shareBtn">Share</button>
     </div>
 
     <main>
@@ -65,11 +66,31 @@
 
         <footer>
             Built by Tau J. Marake · A study in restraint<br>
-            <p>This is NOT a gimmick set. It's a coherent design statement.</p>
+            <p>This is not a gimmick set. It's a coherent design statement.</p>
         </footer>
     </main>
 
     <script>
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
+                title: "Quiet Websites",
+                text: "A collection of small websites that do very little, on purpose.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(data);
+                } else {
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch { }
+        };
+
+
         const toggle = document.getElementById("themeToggle");
         toggle.onclick = () => {
             document.body.classList.toggle("light");
