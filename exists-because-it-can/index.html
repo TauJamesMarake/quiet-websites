@@ -16,8 +16,8 @@
 <body>
 
     <div class="controls">
-
         <button id="themeToggle">Light</button>
+        <button id="shareBtn">Share</button>
     </div>
 
     <main>
@@ -89,6 +89,26 @@
             if (navigator.vibrate) {
                 navigator.vibrate(15);
             }
+        };
+
+        // Share button
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
+                title: "This Website Exists Because It Can.",
+                text: "No ads. No tracking. No purpose. Just curiosity.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(data);
+                } else {
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch { }
         };
 
         /* Footer existential timer */
