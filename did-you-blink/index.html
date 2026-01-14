@@ -36,7 +36,7 @@
 
     <!-- Breath sound -->
     <audio id="breathAudio" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_33b06f69c4.mp3" type="audio/mpeg">
+        <source src="../components/breath-in-and-out.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -94,28 +94,29 @@
         };
 
         // Share button
-        const shareBtn = document.getElementById("shareBtn");
-        shareBtn.onclick = async () => {
-            const shareBtn = {
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
                 title: "Did You Blink?",
-                text: "A quiet reminder that moments pass.",
+                text: "A soft reminder of that moments pass.",
                 url: window.location.href
             };
 
             try {
                 if (navigator.share) {
-                    await navigator.share(shareData);
+                    await navigator.share(data);
                 } else {
-                    await navigator.clipboard.writeText(window.location.href);
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
                     alert("Link copied.");
                 }
-            } catch (err) { }
+            } catch { }
         };
 
         // Analytics-free visit counter
         let visits = localStorage.getItem("blink_visits") || 0;
         visits++;
-        localStorage.setItem("blinl_visits", visits);
+        localStorage.setItem("blink_visits", visits);
 
         document.getElementById("visits").textContent = `${visits} quiet visit${visits > 1 ? "s" : ""} from this device`;
 
