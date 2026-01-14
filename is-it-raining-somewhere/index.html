@@ -16,7 +16,7 @@
 
     <div class="controls">
         <button id="themeToggle">Light</button>
-
+        <button id="shareBtn">Share</button>
     </div>
 
     <main>
@@ -39,6 +39,26 @@
 
 
                 document.body.classList.contains("light") ? "Dark" : "Light";
+        };
+
+        //.. Share button
+        document.getElementById("shareBtn").onclick = async () => {
+            const data = {
+                title: "Is It Raining Somewhere?",
+                text: "Somewhere on Earth, it is raining.",
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(data);
+                } else {
+                    await
+
+                        navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied.");
+                }
+            } catch { }
         };
 
         /** Messages */
